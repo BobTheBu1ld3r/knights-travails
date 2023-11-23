@@ -70,4 +70,41 @@ function buildGraph(source = [0, 0]) {
 }
 
 const adjList = buildGraph([0, 0]);
-debugger;
+
+function doBFS(source = [0, 0], adjList) {
+  const bfsInfo = [];
+  for (let i = 0; i < adjList.length; i++) {
+    bfsInfo[i] = {
+      distance: null,
+      predecessor: null,
+    };
+  }
+  const queue = new Queue();
+  const sourceInfo = {
+    distance: 0,
+    predecessor: null,
+  };
+  const sourceIndex = computeIndex(source);
+
+  bfsInfo[sourceIndex] = sourceInfo;
+
+  queue.enqueue({ index: computeIndex(source), position: source });
+
+  while (!queue.isEmpty()) {
+    const current = queue.dequeue();
+    console.log(current);
+    const unvisitedNeighbours = adjList[current.index].filter((neighbour) => {
+      return bfsInfo[neighbour.index].distance === null;
+    });
+    unvisitedNeighbours.forEach((neighbour) => {
+      currentInfo = bfsInfo[current.index];
+      bfsInfo[neighbour.index].distance = currentInfo.distance + 1;
+      bfsInfo[neighbour.index].predecessor = current;
+      queue.enqueue(neighbour);
+    });
+  }
+
+  return bfsInfo;
+}
+
+const bfsInfo = doBFS([0, 0], adjList);
