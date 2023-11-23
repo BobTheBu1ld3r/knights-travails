@@ -1,7 +1,12 @@
 function Queue() {
   this.items = [];
 }
-
-Queue.prototype.enqueue = (newItem) => this.items.push(newItem);
-Queue.prototype.dequeue = () => this.items.shift();
-Queue.prototype.isEmpty = () => this.items.length === 0;
+Queue.prototype.enqueue = function (newItem) {
+  this.items.push(newItem);
+};
+Queue.prototype.dequeue = function () {
+  this.items.shift();
+};
+Queue.prototype.isEmpty = function () {
+  return this.items.length === 0;
+};
