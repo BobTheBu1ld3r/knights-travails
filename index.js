@@ -12,9 +12,9 @@ Queue.prototype.isEmpty = function () {
 };
 
 const X_MIN = 0;
-const X_MAX = 3;
+const X_MAX = 7;
 const Y_MIN = 0;
-const Y_MAX = 3;
+const Y_MAX = 7;
 
 function isValid([x, y]) {
   return x >= X_MIN && x <= X_MAX && y >= Y_MIN && y <= Y_MAX;
@@ -92,7 +92,6 @@ function doBFS(source = [0, 0], adjList) {
 
   while (!queue.isEmpty()) {
     const current = queue.dequeue();
-    console.log(current);
     const unvisitedNeighbours = adjList[current.index].filter((neighbour) => {
       return bfsInfo[neighbour.index].distance === null;
     });
@@ -107,4 +106,18 @@ function doBFS(source = [0, 0], adjList) {
   return bfsInfo;
 }
 
-const bfsInfo = doBFS([0, 0], adjList);
+function knightMoves(start, end) {
+  const bfsInfo = doBFS(end, adjList);
+  const startIndex = computeIndex(start);
+  const path = [start];
+  currentIndex = startIndex;
+  while (bfsInfo[currentIndex].predecessor !== null) {
+    currentVertex = bfsInfo[currentIndex].predecessor;
+    currentIndex = currentVertex.index;
+    path.push(currentVertex.position);
+  }
+  return path;
+}
+
+const path = knightMoves([0, 0], [7, 7]);
+console.log(path);
